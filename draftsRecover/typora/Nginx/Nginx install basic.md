@@ -1,0 +1,22 @@
+- Nginx是免费开源的，采用的是 BSD 协议。
+- 事前准备
+	- 这里建议各位关闭防火墙
+		- systemctl stop firewalld.service (暂时关闭防火墙)
+		- systemctl disable firewalld.service (永久关闭防火墙)
+		- systemctl status firewalld (查看当前防火墙状态)
+	- 然后 Nginx 需要用到 openssl 库，检查一下有没有
+	- Nginx 还需要 zlib 和 PCRE正则表达式库，三者检查之后。
+- 我们直接去 Nginx 官网，下载源码即可。
+	- https://nginx.org/
+	- 下载稳定版本即可。
+- 由于后期的 Nginx 的配置需要很多的额外文件，这里我们
+	-  mkdir Nginx/core
+	-  将压缩包放入 core 文件中。
+		-  解压 tar -xzf ...
+		-  ./configure
+		-  解压之后，需要 make 和 make install 这里记得需要 root权限。然后条件允许的话，记得开多线程。
+- 这里我们没有对 Nginx 做过多配置
+	- 默认安装是在 /usr/local/nginx/
+		- 进入 sbin 
+		- sudo ./ nginx
+		- 然后 ping 一下本机的 IP 地址，检查是否正确通过。

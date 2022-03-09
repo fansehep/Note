@@ -1,0 +1,48 @@
+# epoll 
+- epoll是linux下特有的 IO 复用函数，epoll使用一组函数完成任务，而不是单个函数。
+- epoll会将用户关心的文件描述符上的事件放在内核中的一个事件表中。
+- 但是epoll需要使用一个额外的文件描述符，来唯一标识内核中的这个事件表。该文件描述符由 epoll_create 创建
+- # epoll_create
+```c++
+#include <sys/epoll.h>
+int epoll_create ( int size );
+```
+- size 参数我们一般认为无效，大概告诉内核这个事件表需要多大。该函数的返回的文件描述符将用作其他所有epoll系统系统调用的第一个参数。
+- # epoll_ctl
+```c++
+int epoll_ctl(int epfd,int op,int fd,struct epoll_event* event);
+```
+- epfd 表示需要操作的文件描述符
+- 该函数成功返回 0 ，失败返回 -1 并且设置 errno
+- op 的选项
+```
+EPOLL_CTL_ADD		//在事件表中注册fd上的事件
+EPOLL_CTL_MOD		//修改fd上的注册事件
+EPOLL_CTL_DEL		//删除fd上的注册事件
+```
+- event 参数指定事件
+```c++
+typedef union epoll_data
+{
+	void*      ptr;
+	int        fd;
+	uint32_t   u32;
+	uint64_t   u64;
+}epoll_data_t;
+```
+- # epoll_wait
+```c++
+int epoll_wait(int epfd,struct epoll_event* events,int maxevents,
+			   int timeout );
+```
+- 该函数成功时返回就绪的文件描述符的个数，失败返回 - 1并设置 errno
+## LT (level trigger, 电平触发 )
+- epoll默认会使用LT模式，
+- 对于采用 LT 工作模式的文件描述符，当 **epoll_wait** 检测到其上有事件发生并将此事件通知到应用程序后，应用程序可以不立即处理该事件。这样，当应用程序下一次调用epoll_wait时，epoll_wait还会再次向应用程序通告此事件，直到该事件被处理。
+## ET(Edge Trigger,边沿触发）
+- 而对于采取边缘触发工作模式的文件描述符，当epoll_wait 检测到其上有事件发生并将此事件通知应用程序后，应用程序必须立即处理该事件，后续的 epoll_wait 调用将不会再向应用程序通知该事件。
+## EPOLLONESHOT事件
+1. 即使我们使用**ET**模式，一个socket的某个事件还是可能被触发多次。
+2. 在并发程序中，比如一个线程读完了某个socket上的数据后开始处理这些数据，而在数据的处理过程中，该socket上又有新的数据可读，此时 **EPOLLIN** 再次被触发，此时又唤醒一个新的线程来读取这些数据，然后两个线程同时操作一个socket，这很危险！！！
+3. 对于注册了 **EPOLLONESHOT**事件的文件描述符，操作系统最多可以触发其上注册的一个可读，可写或者异常事件。并且只触发一次。当然我们也可以调用 epoll_ctl 函数重置该文件描述符上注册的 EPOLLONESHOT ，这样，当一个线程在处理某一个socket时，其他线程是不可能的有机会操作socket的
+4. 但同时我们处理完这个socket后，必须重置这个socket上的 EPOLLONESHOT 事件，以确保这个socket下一次可读时，其EPOLLIN事件能被触发，从而让其他工作线程有机会继续处理这个socket。

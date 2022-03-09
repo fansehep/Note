@@ -1,0 +1,23 @@
+- 进入mysql 
+	- mysql -u root -p	user : 用户名 user 
+	- 插件 mycli -h localhost -u root mysql
+- **show tables;** 
+	- 打印出当前所选中的数据库的所有表，未选中则会 No database selected
+- **show databases;**
+	- 返回当前用户可查看的所有的列表。
+- **show columns from name;**
+	- show columns 要求给出一个表的名称，对每个字段返回一行，其中便包含数据类型，是否可以为NULL，键值信息，默认信息，
+- **describe name**
+	- 该命令 与 show columns from name; 命令一样，可以理解为简略版本。
+- **show status**
+	-  显示广泛的服务器信息
+- **show create database** 和 **show create table**
+	- 显示特定数据库或者表的MySQL语句
+- **showgrants**
+	- 用来显示授予用户 (所有用户或者特定用户)  的安全权限。
+- **show errors**
+	- 显示服务器错误信息
+- **show warnings**
+	- 显示服务器警告
+- **help show**
+	- 显示可用的show帮助，同时适用于其他sql语句。

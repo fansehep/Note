@@ -1,0 +1,2 @@
+- 命令包
+	- pacman -S net-tools dnsutils inetutils iproute2
