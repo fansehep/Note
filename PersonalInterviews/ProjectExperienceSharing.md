@@ -78,5 +78,9 @@ CurveBs client这里的代码整体还是很清晰明了的，可以轻松的知
 /* simple example: */
 auto fd = Open2("I Love Curve", info, CURVE_SHARED | CURVE_RDWR);
 ```
+<div align=center> <image src="./mds_writerlock.jpg" width = 90%>
+<div align=left>
+
+
 - 项目思考:
 在参与的过程中，导师很健谈，耐心的指导我，并且很认真的帮我review, 这里实在是很感谢他。并且在他的指导下，我帮助社区解决了一些简单的issue。目前个人对于该项目的想法是: 过去的```struct openfalgs```实属鸡肋, 新的设计有效的拓展了现有的Open方式, 对于现有的上层应用来说, 无疑可以在数据一致性和角色控制上做得更加完美, 无需应用层自己感知心跳, 即可轻松管理。
