@@ -41,6 +41,8 @@ Curve 是一款现代化的开源分布式存储系统，支持**块存储**(Cur
 
 GitHub: [fansehep](https://github.com/fansehep)
 
+照片: [一张生活照](fan_photo.jpg)
+
 学校: 西安邮电大学
 
 - 开发详情:
