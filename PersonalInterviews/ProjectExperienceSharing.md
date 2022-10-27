@@ -31,7 +31,7 @@ Curve 是一款现代化的开源分布式存储系统，支持**块存储**(Cur
 2. 熟悉C++软件开发，熟悉gtest等相关单元测试框架。
 3. 熟悉linux上的编译，调试命令，如gcc，gdb等。
 
-- 项目导师: [吴汉卿](https://github.com/wu-hanqing)
+- 项目导师: 吴汉卿
 
 - 项目链接: https://summer-ospp.ac.cn/#/org/prodetail/222990283
 
